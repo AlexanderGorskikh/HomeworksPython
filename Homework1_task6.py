@@ -23,10 +23,10 @@ else:
     for i in -1, -2, -3:
         right += int(number[i])
 
-    for n in 1, 2, 3:
-        left += int(number[i])
+    for n in 0, 1, 2:
+        left += int(number[n])
 
     if right != left:
-        print('Your ticket is lucky')
-    else:
         print('Your ticket is unlucky')
+    else:
+        print('Your ticket is lucky')

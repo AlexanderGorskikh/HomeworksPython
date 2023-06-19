@@ -15,6 +15,15 @@ def open_file(path: str = 'phones.txt'):
         phone_book[int(nc[0])] = {'name': nc[1], 'phone': nc[2], 'comment': nc[3]}
     print('\nТелефонная книга успешно загружена')
 
+def save_file():
+    data = []
+    for i, contact in phone_book.items():
+        new = ':'.join([str(i), contact.get("name"), contact.get("phone"), contact.get("comment")])
+        data.append(new)
+    data= '\n'.join(data)
+    with open(path, 'w', encoding='UTF-8') as file:
+        file.write(data)
+    print('Файл сохранен')
 
 def show_info(book: dict[int, dict]):
     print('=' * 200)
@@ -36,6 +45,17 @@ def search():
         if word.lower() in ''.join(list(contact.values())).lower():
             result[i] = contact
     return result
+
+def change_contact():
+    result = search()
+    show_info(result)
+    index = int(input('Введите ID контакта для изменения'))
+    delete_cnt = phone_book.pop(index)
+    name = input('Введите новое имя контакта: ')
+    phone = input('Введите новый телефон контакта: ')
+    comment = input('Введите новый комментарий к контакту: ')
+    phone_book[index] = {'name': name, 'phone': phone, 'comment': comment}
+    print('Контакт изменен')
 def remove ():
     result = search()
     show_info(result)
@@ -44,15 +64,7 @@ def remove ():
     print(f'\nКонтакт {del_cnt.get("name")} удален')
 
 
-def save_file():
-    data = []
-    for i, contact in phone_book.items():
-        new = ':'.join([str(i), contact.get("name"), contact.get("phone"), contact.get("comment")])
-        data.append(new)
-    data= '\n'.join(data)
-    with open(path, 'w', encoding='UTF-8') as file:
-        file.write(data)
-    print('Файл сохранен')
+
 
 
 def start() -> int:
@@ -88,7 +100,7 @@ while True:
             result = search()
             show_info(result)
         case 6:
-            pass
+            change_contact()
         case 7:
             remove()
         case 8:
